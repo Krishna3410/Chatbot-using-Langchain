@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Query Bot</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .container {
+            margin-top: 50px;
+        }
+        h1 {
+            color: #343a40;
+            margin-bottom: 30px;
+        }
+        .response-box {
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            padding: 20px;
+            background-color: #ffffff;
+            margin-top: 20px;
+        }
+        .query-input {
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="container text-center">
+        <h1>Course Query Bot</h1>
+        <div class="input-group mb-3">
+            <input type="text" id="queryInput" class="form-control query-input" placeholder="Enter your course query here" aria-label="Course Query">
+        </div>
+        <button class="btn btn-primary" onclick="submitQuery()">Submit</button>
+        <div class="response-box" id="response">
+            <h5>Response:</h5>
+            <pre id="responseContent"></pre>
+        </div>
+    </div>
+
+    <script>
+        async function submitQuery() {
+            const query = document.getElementById("queryInput").value;
+            const response = await fetch("/query", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ query }),
+            });
+            const data = await response.json();
+            document.getElementById("responseContent").innerText = JSON.stringify(data, null, 2);
+        }
+    </script>
+</body>
+</html>
