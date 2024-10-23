@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Query</title>
+    <script>
+        async function submitQuery() {
+            const query = document.getElementById("queryInput").value;
+            const response = await fetch("/query", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ query }),
+            });
+            const data = await response.json();
+            document.getElementById("response").innerText = JSON.stringify(data, null, 2);
+        }
+    </script>
+</head>
+<body>
+    <h1>Course Query</h1>
+    <input type="text" id="queryInput" placeholder="Enter your query" />
+    <button onclick="submitQuery()">Submit</button>
+    <pre id="response"></pre>
+</body>
+</html>
